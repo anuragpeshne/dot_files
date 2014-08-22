@@ -1,5 +1,4 @@
 syntax enable 
-set background=dark
 set shiftwidth=4
 set tabstop=4
 set autochdir
@@ -32,7 +31,7 @@ set foldenable
 
 colorscheme wombat "solarized
 set number
-set cursorline
+"set cursorline			this make vim ugly in some color schemes
 filetype indent on
 set wildmenu
 set hlsearch
