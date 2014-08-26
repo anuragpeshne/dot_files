@@ -41,3 +41,5 @@ set ignorecase          " Do case insensitive matching
 set smartcase           " Do smart case matching
 set incsearch           " Incremental search
 set hidden              " Hide buffers when they are abandoned
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
