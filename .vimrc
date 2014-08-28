@@ -41,5 +41,6 @@ set ignorecase          " Do case insensitive matching
 set smartcase           " Do smart case matching If you search for something containing uppercase characters, it will do a case sensitive search; if you search for something purely lowercase, it will do a case insensitive search. You can use \c and \C to override 
 set incsearch           " Incremental search
 set hidden              " Hide buffers when they are abandoned
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+autocmd VimEnter * NERDTree "open nerd on startup
+autocmd VimEnter * wincmd p "have cursor in file editing tab
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif "close nerd tree if all other files are closed
