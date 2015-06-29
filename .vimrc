@@ -6,7 +6,8 @@ set expandtab       " Expand TABs to spaces
 set autoindent
 
 " display related stuff
-set relativenumber  " other option: number
+set relativenumber
+set number
 colorscheme wombat256mod
 set foldenable
 set colorcolumn=80
@@ -36,6 +37,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
