@@ -3,6 +3,7 @@ syntax on
 " indentation related and coding style
 set tabstop=2       " The width of a TAB is set to 2.
 set expandtab       " Expand TABs to spaces
+set softtabstop=2
 set autoindent
 
 " display related stuff
