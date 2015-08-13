@@ -3,6 +3,7 @@ alias gits="git status -sb"
 
 # colorify
 alias grep="grep --color"
+alias egrep="egrep --color=auto";
 alias ls="ls -G"
 
 # tmux with unicode support; Fixes funny whitespace prepended in commands
