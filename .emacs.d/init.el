@@ -68,9 +68,7 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; evil
-(require 'evil)
-(evil-mode 1)
-(define-key evil-normal-state-map "M-x" 'execute-extended-command)
+(setq evil-want-C-u-scroll t)
 
 ;; Change cursor color depending on mode
 (setq evil-emacs-state-cursor '("red" box))
@@ -79,6 +77,9 @@
 (setq evil-insert-state-cursor '("red" bar))
 (setq evil-replace-state-cursor '("red" bar))
 (setq evil-operator-state-cursor '("red" hollow))
+(require 'evil)
+(evil-mode 1)
+(define-key evil-normal-state-map "M-x" 'execute-extended-command)
 
 ;;php mode:  do stuff only if php-mode installed
 (when (require 'php-mode nil 'noerror)
@@ -91,6 +92,11 @@
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 
+;; shell mode
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (linum-mode -1)
+            (evil-mode -1)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
