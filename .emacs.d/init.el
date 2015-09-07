@@ -95,8 +95,15 @@
 ;; shell mode
 (add-hook 'shell-mode-hook
           (lambda ()
-            (linum-mode -1)
-            (evil-mode -1)))
+            (linum-mode -1)))
+
+;; auto complete config
+(ac-config-default)
+
+;; ido
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
