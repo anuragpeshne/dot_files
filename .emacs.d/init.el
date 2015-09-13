@@ -97,8 +97,16 @@
           (lambda ()
             (linum-mode -1)))
 
+;; eshell mode
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (linum-mode -1)))
+
 ;; auto complete config
 (ac-config-default)
+
+;; reload files automatically when changed on disk
+(global-auto-revert-mode t)
 
 ;; ido
 (setq ido-enable-flex-matching t)
