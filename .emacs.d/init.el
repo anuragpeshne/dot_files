@@ -100,6 +100,15 @@
 ;; auto complete config
 (ac-config-default)
 
+;; faster buffer switch
+(define-prefix-command 'vim-buffer-jump)
+(global-set-key (kbd "C-w") 'vim-buffer-jump)
+(define-key vim-buffer-jump (kbd "<left>") 'windmove-left)
+(define-key vim-buffer-jump (kbd "<right>") 'windmove-right)
+(define-key vim-buffer-jump (kbd "<up>") 'windmove-up)
+(define-key vim-buffer-jump (kbd "<down>") 'windmove-down)
+
+
 ;; ido
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
