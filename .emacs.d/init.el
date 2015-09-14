@@ -97,6 +97,11 @@
           (lambda ()
             (linum-mode -1)))
 
+;; eshell mode
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (linum-mode -1)))
+
 ;; auto complete config
 (ac-config-default)
 
@@ -108,6 +113,8 @@
 (define-key vim-buffer-jump (kbd "<up>") 'windmove-up)
 (define-key vim-buffer-jump (kbd "<down>") 'windmove-down)
 
+;; reload files automatically when changed on disk
+(global-auto-revert-mode t)
 
 ;; ido
 (setq ido-enable-flex-matching t)
