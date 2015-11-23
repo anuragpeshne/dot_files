@@ -33,11 +33,11 @@
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 (setq-default indent-tabs-mode nil) ;; use space for indentation
-(setq-default tab-width 2) ; or any other preferred value
+(setq-default tab-width 2) ;; or any other preferred value
+(setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
-(display-time-mode 1)
 
 (setq case-fold-search t
       search-highlight t
@@ -46,7 +46,6 @@
       make-backup-files nil
       ispell-dictionary "english"
       transient-mark-mode t
-      visible-bell t
       show-paren-delay 0)
 (delete-selection-mode 1)
 
@@ -134,3 +133,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;; custom language hooks
+(add-hook 'javascript-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 2))))
+
+(set-frame-parameter nil 'fullscreen 'fullboth)
+;;; init.el ends here

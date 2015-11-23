@@ -39,6 +39,7 @@ Plugin 'bling/vim-airline'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'mileszs/ack.vim'
+Plugin 'gkz/vim-ls'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
