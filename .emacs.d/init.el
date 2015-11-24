@@ -146,5 +146,11 @@
                       (setq indent-tabs-mode nil
                             tab-width 2))))
 
+;; org mode settings
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
 (set-frame-parameter nil 'fullscreen 'fullboth)
 ;;; init.el ends here
