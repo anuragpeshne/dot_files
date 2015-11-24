@@ -1,6 +1,7 @@
 .emacs.d/auto-save-list
 .emacs.d/elpa
 .emacs.d/games
+.emacs.d/url
 .emacs.d/eshell
 .emacs.d/*.last
 .emacs.d/*.dat

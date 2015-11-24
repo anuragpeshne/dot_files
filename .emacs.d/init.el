@@ -119,6 +119,11 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+(setq tramp-default-method "ssh")
+
+(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
