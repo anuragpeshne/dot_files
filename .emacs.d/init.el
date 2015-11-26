@@ -150,7 +150,11 @@
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
+(setq org-log-done 'time)
+(setq org-src-fontify-natively t)
+(setq org-completion-use-ido t)
+(setq org-agenda-files (list "~/brainDump/projectStack.org"
+                             "~/brainDump/currentWeek.org"))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 ;;; init.el ends here
