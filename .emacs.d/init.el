@@ -22,6 +22,7 @@
 (column-number-mode 1)
 (hl-line-mode 1)
 (require 'linum-relative)
+(linum-relative-mode 1)
 
 ;; look
 (load-theme 'zenburn t)
