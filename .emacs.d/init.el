@@ -7,6 +7,29 @@
 (package-initialize)
 (when (not package-archive-contents) (package-refresh-contents))
 
+;; are we on mac?
+(setq is-mac (equal system-type 'darwin))
+
+;; install plugins if they are missing
+;; setup packages list
+(setq package-list
+      '(auto-complete
+        flycheck
+        helm
+        php-mode
+        powerline
+        evil
+        magit
+        smart-mode-line-powerline-theme
+        smart-mode-line
+        zenburn-theme
+        leuven-theme))
+
+(mapc (lambda (package)
+        (unless (package-installed-p package)
+          (package-install package)))
+      package-list)
+
 ;; search with regex
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -183,6 +206,10 @@
 (setq org-completion-use-ido t)
 (setq org-agenda-files (list "~/brainDump/projectStack.org"
                              "~/brainDump/currentWeek.org"))
+(add-hook 'org-mode-hook
+          (function (lambda ()
+                      (load-theme 'leuven t)
+                      (sml/apply-theme 'light-powerline))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 ;;; init.el ends here
