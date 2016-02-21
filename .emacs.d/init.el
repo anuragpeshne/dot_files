@@ -145,6 +145,11 @@
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 (require 'helm-config)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(setq helm-M-x-fuzzy-match t)
+(setq helm-lisp-completion-at-point t)
+(setq helm-autoresize-mode 1)
 (helm-mode 1)
 
 (custom-set-variables
