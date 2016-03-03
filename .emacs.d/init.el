@@ -74,6 +74,20 @@
       show-paren-delay 0)
 (delete-selection-mode 1)
 
+;; good looking symbols
+(defun my-add-pretty-lambda ()
+"make some word or string show as pretty Unicode symbols"
+(setq prettify-symbols-alist
+        '(
+          ("lambda" . 955) ; λ
+          ("->" . 8594)    ; →
+          ("=>" . 8658)    ; ⇒
+          ("map" . 8614)   ; ↦
+          )))
+
+(add-hook 'scheme-mode-hook 'my-add-pretty-lambda)
+(add-hook 'tex-mode-hook 'my-add-pretty-lambda)
+
 ;; nice parentheses
 (show-paren-mode t)
 (setq show-paren-style 'expression)
@@ -161,7 +175,7 @@
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
-    ("f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+    ("20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(fci-rule-color "#383838")
  '(nrepl-message-colors
    (quote
