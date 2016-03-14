@@ -228,8 +228,10 @@
                              "~/brainDump/currentWeek.org"))
 (add-hook 'org-mode-hook
           (function (lambda ()
+                      (ispell-minor-mode t)
                       (load-theme 'leuven t)
                       (sml/apply-theme 'light-powerline))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
+(setq ispell-program-name "/usr/local/bin/aspell")
 ;;; init.el ends here
