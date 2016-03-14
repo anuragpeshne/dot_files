@@ -47,7 +47,7 @@
 (require 'linum-relative)
 (linum-relative-mode 1)
 
-;; look
+;; look and appearance
 (load-theme 'zenburn t)
 (global-font-lock-mode t)
 (show-paren-mode 1)
@@ -59,6 +59,7 @@
 (global-whitespace-mode t)
 (setq-default indent-tabs-mode nil) ;; use space for indentation
 (setq-default tab-width 2) ;; or any other preferred value
+(tooltip-mode nil) ;; disable tooltips, messesup in OSX; Instead show in echo area
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
 (defvaralias 'c-basic-offset 'tab-width)
