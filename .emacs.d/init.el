@@ -1,3 +1,14 @@
+;;;; package --- Summary
+;;; Commentary:
+;; This is init Emacs of Anurag Peshne, This is how I roll.
+;;; Code:
+
+;; bump up garbage collection threshold; will restore this at the end
+;; backup value
+;; (defvar gc-cons-threshold-bk)
+;; (setq gc-cons-threshold-bk gc-cons-threshold)
+;; (setq gc-cons-threshold 100000000)
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -8,6 +19,7 @@
 (when (not package-archive-contents) (package-refresh-contents))
 
 ;; are we on mac?
+(defvar is-mac)
 (setq is-mac (equal system-type 'darwin))
 
 ;; install plugins if they are missing
@@ -53,7 +65,8 @@
 (show-paren-mode 1)
 (prefer-coding-system 'utf-8)
 ;; use a nice font by default
-(set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1")
+(when is-mac
+  (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
@@ -233,5 +246,9 @@
                       (sml/apply-theme 'light-powerline))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
-(setq ispell-program-name "/usr/local/bin/aspell")
-;;; init.el ends here
+(setq ispell-program-name "/usr/local/bin/ispell")
+
+;; ;; Restore gc-cons-threshold
+;; (setq gc-cons-threshold gc-cons-threshold-bk)
+;; ;
+;; init.el ends here
