@@ -1,20 +1,20 @@
-;;;; package --- Summary
+;;; package --- Summary
 ;;; Commentary:
 ;; This is init Emacs of Anurag Peshne, This is how I roll.
 ;;; Code:
 
 ;; bump up garbage collection threshold; will restore this at the end
 ;; backup value
-;; (defvar gc-cons-threshold-bk)
-;; (setq gc-cons-threshold-bk gc-cons-threshold)
-;; (setq gc-cons-threshold 100000000)
+(defvar gc-cons-threshold-bk)
+(setq gc-cons-threshold-bk gc-cons-threshold)
+(setq gc-cons-threshold (* 10 1024 1024))
+
+(setq user-full-name "Anurag Peshne"
+      user-mail-address "anurag.peshne@gmail.com")
 
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 (when (not package-archive-contents) (package-refresh-contents))
 
@@ -22,57 +22,145 @@
 (defvar is-mac)
 (setq is-mac (equal system-type 'darwin))
 
-;; install plugins if they are missing
-;; setup packages list
-(setq package-list
-      '(auto-complete
-        flycheck
-        helm
-        php-mode
-        powerline
-        evil
-        magit
-        smart-mode-line-powerline-theme
-        smart-mode-line
-        zenburn-theme
-        leuven-theme))
+;; why say yes when y is enough
+(fset 'yes-or-no-p 'y-or-n-p)
 
-(mapc (lambda (package)
-        (unless (package-installed-p package)
-          (package-install package)))
-      package-list)
+(setq use-package-verbose t)
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-;; search with regex
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode 1)
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
+
+(when window-system
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode 1)
+  (scroll-bar-mode -1))
+
+(use-package winner
+             :ensure t
+             :defer t)
+
+(use-package auto-complete
+             :ensure t
+             :defer 3
+             :diminish auto-complete-mode
+             :init (ac-config-default))
+
+(use-package flycheck
+             :ensure t
+             :defer 5
+             :diminish helm-mode
+             :init (global-flycheck-mode))
+
+(use-package helm
+             :ensure t
+             :diminish helm-mode
+             :init
+             (progn
+               (require 'helm-config)
+               (setq helm-candidate-number-limit 100)
+               ;; From https://gist.github.com/antifuchs/9238468
+               (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+                     helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+                     helm-yas-display-key-on-candidate t
+                     helm-quick-update t
+                     helm-M-x-requires-pattern nil
+                     helm-ff-skip-boring-files t
+                     helm-M-x-fuzzy-match t
+                     helm-lisp-completion-at-point t
+                     helm-autoresize-mode t)
+               (helm-mode 1))
+             :bind (("C-x C-f" . helm-find-files)
+                    ("M-x" . helm-M-x)))
+
+(use-package smart-mode-line
+             :ensure t
+             :defer t
+             :init
+             (progn
+               (setq sml/theme 'dark)
+               (setq sml/no-confirm-load-theme t)
+               (sml/setup)))
+
+(use-package smart-mode-line-powerline-theme
+             :ensure t
+             :defer t)
+
+(use-package evil
+             :ensure t
+             :demand
+             :init
+             (progn
+               (setq evil-want-C-u-scroll t)
+               ;; Change cursor color depending on mode
+               (setq evil-emacs-state-cursor '("red" box)
+                     evil-normal-state-cursor '("green" box)
+                     evil-visual-state-cursor '("orange" box)
+                     evil-insert-state-cursor '("red" bar)
+                     evil-replace-state-cursor '("red" bar)
+                     evil-operator-state-cursor '("red" hollow))
+               (evil-mode 1)))
+
+(use-package magit :ensure t :defer t)
+
+;; highlight changes
+(use-package git-gutter-fringe
+  :ensure t
+  :diminish git-gutter-mode
+  :config (global-git-gutter-mode))
+
+
+(use-package zenburn-theme
+  :ensure t
+  :demand t
+  :init (load-theme 'zenburn t))
+
+(use-package leuven-theme :ensure t :disabled t)
+
+(use-package linum-relative
+  :ensure t
+  :demand t
+  :init
+  (progn
+    (global-linum-mode t)
+    (linum-relative-mode t)))
 
 ;; current line and line number
-;; (global-hl-line-mode 1)
-;; (set-face-attribute hl-line-face nil :underline nil)
-(linum-mode 1)
-(line-number-mode 1)
-(global-linum-mode t)
+;; (linum-mode 1)
+;; (line-number-mode 1)
+;; (global-linum-mode t)
 (column-number-mode 1)
 (hl-line-mode 1)
-(require 'linum-relative)
-(linum-relative-mode 1)
 
 ;; look and appearance
-(load-theme 'zenburn t)
 (global-font-lock-mode t)
 (show-paren-mode 1)
 (prefer-coding-system 'utf-8)
 ;; use a nice font by default
 (when is-mac
   (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
-(require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail trailing))
-(global-whitespace-mode t)
+
+(use-package whitespace
+  :defer 2
+  :init
+  (progn
+    (setq whitespace-style '(face empty tabs lines-tail trailing))
+    (global-whitespace-mode t)))
+
 (setq-default indent-tabs-mode nil) ;; use space for indentation
 (setq-default tab-width 2) ;; or any other preferred value
-(tooltip-mode nil) ;; disable tooltips, messesup in OSX; Instead show in echo area
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
 (defvaralias 'c-basic-offset 'tab-width)
@@ -90,7 +178,7 @@
 
 ;; good looking symbols
 (defun my-add-pretty-lambda ()
-"make some word or string show as pretty Unicode symbols"
+"Make some word or string show as pretty Unicode symbols."
 (setq prettify-symbols-alist
         '(
           ("lambda" . 955) ; λ
@@ -106,32 +194,11 @@
 (show-paren-mode t)
 (setq show-paren-style 'expression)
 
-(scroll-bar-mode -1)
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; Personal Info
-(setq user-mail-address "anurag.peshne@gmail.com")
-(setq user-full-name "Anurag Peshne")
-
 ;; take care of trailing whitespace
 (setq-default show-trailing-whitespace t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
-
-;; evil
-(setq evil-want-C-u-scroll t)
-
-;; Change cursor color depending on mode
-(setq evil-emacs-state-cursor '("red" box))
-(setq evil-normal-state-cursor '("green" box))
-(setq evil-visual-state-cursor '("orange" box))
-(setq evil-insert-state-cursor '("red" bar))
-(setq evil-replace-state-cursor '("red" bar))
-(setq evil-operator-state-cursor '("red" hollow))
-(require 'evil)
-(evil-mode 1)
-(define-key evil-normal-state-map "M-x" 'execute-extended-command)
 
 ;;php mode:  do stuff only if php-mode installed
 (when (require 'php-mode nil 'noerror)
@@ -139,10 +206,6 @@
   (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
   (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 )
-;; powerline
-(setq sml/theme 'dark)
-(setq sml/no-confirm-load-theme t)
-(sml/setup)
 
 ;; shell mode
 (add-hook 'shell-mode-hook
@@ -155,7 +218,6 @@
             (linum-mode -1)))
 
 ;; auto complete config
-(ac-config-default)
 
 ;; faster buffer switch
 (define-prefix-command 'vim-buffer-jump)
@@ -171,14 +233,6 @@
 (setq tramp-default-method "ssh")
 
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
-
-(require 'helm-config)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(setq helm-M-x-fuzzy-match t)
-(setq helm-lisp-completion-at-point t)
-(setq helm-autoresize-mode 1)
-(helm-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -232,23 +286,28 @@
 
 ;; org mode settings
 (require 'org)
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done 'time)
-(setq org-src-fontify-natively t)
-(setq org-completion-use-ido t)
-(setq org-agenda-files (list "~/brainDump/projectStack.org"
-                             "~/brainDump/currentWeek.org"))
+(use-package org
+  :defer t
+  :bind
+  (("\C-cl" . org-store-link)
+   ("\C-ca" . org-agenda))
+  :init
+  (progn
+    (setq org-log-done 'time)
+    (setq org-src-fontify-natively t)
+    (setq org-agenda-files (list "~/brainDump/projectStack.org"
+				"~/brainDump/currentWeek.org"))))
+
 (add-hook 'org-mode-hook
           (function (lambda ()
-                      (ispell-minor-mode t)
-                      (load-theme 'leuven t)
-                      (sml/apply-theme 'light-powerline))))
+                      (ispell-minor-mode t))))
+  ;;                    (load-theme 'leuven t)
+                      ;;(sml/apply-theme 'light-powerline))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 (setq ispell-program-name "/usr/local/bin/ispell")
 
-;; ;; Restore gc-cons-threshold
-;; (setq gc-cons-threshold gc-cons-threshold-bk)
-;; ;
-;; init.el ends here
+;; Restore gc-cons-threshold
+(setq gc-cons-threshold gc-cons-threshold-bk)
+
+;;; init.el ends here

@@ -5,3 +5,6 @@
 .emacs.d/eshell
 .emacs.d/*.last
 .emacs.d/*.dat
+.emacs.d/recentf
+.emacs.d/savehist
+.emacs.d/tramp
