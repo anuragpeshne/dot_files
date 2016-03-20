@@ -7,7 +7,7 @@
 ;; backup value
 (defvar gc-cons-threshold-bk)
 (setq gc-cons-threshold-bk gc-cons-threshold)
-(setq gc-cons-threshold (* 10 1024 1024))
+(setq gc-cons-threshold (* 100 1024 1024))
 
 (setq user-full-name "Anurag Peshne"
       user-mail-address "anurag.peshne@gmail.com")
@@ -60,7 +60,7 @@
 (use-package flycheck
              :ensure t
              :defer 5
-             :diminish helm-mode
+             :diminish flycheck-mode
              :init (global-flycheck-mode))
 
 (use-package helm
@@ -113,25 +113,26 @@
                      evil-operator-state-cursor '("red" hollow))
                (evil-mode 1)))
 
-(use-package magit :ensure t :defer t)
+(use-package magit :ensure t :defer 5)
 
 ;; highlight changes
 (use-package git-gutter-fringe
   :ensure t
+  ;:defer 5
   :diminish git-gutter-mode
   :config (global-git-gutter-mode))
 
 
 (use-package zenburn-theme
   :ensure t
-  :demand t
+  :defer 2
   :init (load-theme 'zenburn t))
 
 (use-package leuven-theme :ensure t :disabled t)
 
 (use-package linum-relative
   :ensure t
-  :demand t
+  :defer t
   :init
   (progn
     (global-linum-mode t)
@@ -200,12 +201,9 @@
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;;php mode:  do stuff only if php-mode installed
-(when (require 'php-mode nil 'noerror)
-  (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-  (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-  (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-)
+;;php mode
+(use-package php-mode
+  :mode ("\\.php$" "\\.inc$"))
 
 ;; shell mode
 (add-hook 'shell-mode-hook
@@ -216,8 +214,6 @@
 (add-hook 'eshell-mode-hook
           (lambda ()
             (linum-mode -1)))
-
-;; auto complete config
 
 ;; faster buffer switch
 (define-prefix-command 'vim-buffer-jump)
@@ -243,7 +239,7 @@
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
-    ("20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+    ("ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(fci-rule-color "#383838")
  '(nrepl-message-colors
    (quote
@@ -285,7 +281,6 @@
                             tab-width 2))))
 
 ;; org mode settings
-(require 'org)
 (use-package org
   :defer t
   :bind
@@ -296,13 +291,11 @@
     (setq org-log-done 'time)
     (setq org-src-fontify-natively t)
     (setq org-agenda-files (list "~/brainDump/projectStack.org"
-				"~/brainDump/currentWeek.org"))))
+                                 "~/brainDump/currentWeek.org"))))
 
 (add-hook 'org-mode-hook
           (function (lambda ()
                       (ispell-minor-mode t))))
-  ;;                    (load-theme 'leuven t)
-                      ;;(sml/apply-theme 'light-powerline))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 (setq ispell-program-name "/usr/local/bin/ispell")
