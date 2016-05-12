@@ -291,13 +291,17 @@
     (setq org-log-done 'time)
     (setq org-src-fontify-natively t)
     (setq org-agenda-files (list "~/brainDump/projectStack.org"
-                                 "~/brainDump/currentWeek.org"))))
+                                 "~/brainDump/currentWeek.org"
+                                 "~/brainDump/currentMonth.org"))))
 
 (add-hook 'org-mode-hook
           (function (lambda ()
                       (ispell-minor-mode t))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
+(setq inhibit-splash-screen t)
+(org-agenda-list)
+(delete-other-windows)
 (setq ispell-program-name "/usr/local/bin/ispell")
 
 ;; Restore gc-cons-threshold
