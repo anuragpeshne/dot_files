@@ -10,9 +10,8 @@ alias ls="ls -G"
 alias tmux="tmux -u"
 
 # for OSX: point vim to newer version
+alias vim="/Applications/MacVim.app/Contents/MacOS/vim"
 alias mvim="/Applications/MacVim.app/Contents/MacOS/MacVim"
-# neovim
-alias vim="~/code/neovim/bin/nvim"
 
 # scheme
 alias scheme="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources/mit-scheme"

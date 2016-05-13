@@ -244,6 +244,7 @@
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    (quote
@@ -299,6 +300,8 @@
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 (setq ispell-program-name "/usr/local/bin/ispell")
+
+(setq sql-mysql-program "/usr/local/mysql/bin/mysql")
 
 ;; Restore gc-cons-threshold
 (setq gc-cons-threshold gc-cons-threshold-bk)
