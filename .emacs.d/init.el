@@ -9,6 +9,8 @@
 (setq gc-cons-threshold-bk gc-cons-threshold)
 (setq gc-cons-threshold (* 100 1024 1024))
 
+(setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq user-full-name "Anurag Peshne"
       user-mail-address "anurag.peshne@gmail.com")
 
@@ -56,6 +58,10 @@
              :defer 3
              :diminish auto-complete-mode
              :init (ac-config-default))
+
+(use-package dumb-jump
+             :ensure t
+             :defer 3)
 
 (use-package flycheck
              :ensure t
@@ -112,6 +118,13 @@
                      evil-replace-state-cursor '("red" bar)
                      evil-operator-state-cursor '("red" hollow))
                (evil-mode 1)))
+
+(use-package evil-vimish-fold
+             :ensure t
+             :defer t
+             :diminish evil-vimish-fold-mode
+             :init
+             (evil-vimish-fold-mode 1))
 
 (use-package magit :ensure t :defer 5)
 
@@ -290,6 +303,7 @@
   :init
   (progn
     (setq org-log-done 'time)
+    (org-agenda-skip-scheduled-if-done t)
     (setq org-src-fontify-natively t)
     (setq org-agenda-files (list "~/brainDump/projectStack.org"
                                  "~/brainDump/currentWeek.org"
