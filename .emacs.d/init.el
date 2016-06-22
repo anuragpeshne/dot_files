@@ -132,9 +132,8 @@
              :ensure t
              :defer t
              :diminish ace-jump-mode
-             :bind
-             (("C-c SPC" . ace-jump-word-mode)
-              ("C-c C-c SPC" . ace-jump-char-mode)))
+             :init
+             (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
 
 ;; highlight changes
 (use-package git-gutter-fringe
