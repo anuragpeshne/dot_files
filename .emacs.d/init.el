@@ -128,6 +128,14 @@
 
 (use-package magit :ensure t :defer 5)
 
+(use-package ace-jump-mode
+             :ensure t
+             :defer t
+             :diminish ace-jump-mode
+             :bind
+             (("C-c SPC" . ace-jump-word-mode)
+              ("C-c C-c SPC" . ace-jump-char-mode)))
+
 ;; highlight changes
 (use-package git-gutter-fringe
   :ensure t
