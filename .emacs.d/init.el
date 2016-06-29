@@ -50,90 +50,100 @@
   (scroll-bar-mode -1))
 
 (use-package winner
-             :ensure t
-             :defer t)
+  :ensure t
+  :defer t
+  :init (winner-mode 1))
 
 (use-package auto-complete
-             :ensure t
-             :defer 3
-             :diminish auto-complete-mode
-             :init (ac-config-default))
+  :ensure t
+  :defer 3
+  :diminish auto-complete-mode
+  :init (ac-config-default))
 
 (use-package dumb-jump
-             :ensure t
-             :defer 3)
+  :ensure t
+  :defer 3
+  :bind ("C-M-g" . dumb-jump-go))
 
 (use-package flycheck
-             :ensure t
-             :defer 5
-             :diminish flycheck-mode
-             :init (global-flycheck-mode))
+  :ensure t
+  :defer 5
+  :diminish flycheck-mode
+  :init (global-flycheck-mode))
 
 (use-package helm
-             :ensure t
-             :diminish helm-mode
-             :init
-             (progn
-               (require 'helm-config)
-               (setq helm-candidate-number-limit 100)
-               ;; From https://gist.github.com/antifuchs/9238468
-               (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-                     helm-input-idle-delay 0.01  ; this actually updates things
+  :ensure t
+  :diminish helm-mode
+  :init
+  (progn
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
                                         ; reeeelatively quickly.
-                     helm-yas-display-key-on-candidate t
-                     helm-quick-update t
-                     helm-M-x-requires-pattern nil
-                     helm-ff-skip-boring-files t
-                     helm-M-x-fuzzy-match t
-                     helm-lisp-completion-at-point t
-                     helm-autoresize-mode t)
-               (helm-mode 1))
-             :bind (("C-x C-f" . helm-find-files)
-                    ("M-x" . helm-M-x)))
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t
+          helm-M-x-fuzzy-match t
+          helm-lisp-completion-at-point t
+          helm-autoresize-mode t)
+    (helm-mode 1))
+  :bind (("C-x C-f" . helm-find-files)
+         ("M-x" . helm-M-x)))
 
 (use-package smart-mode-line
-             :ensure t
-             :defer t
-             :init
-             (progn
-               (setq sml/theme 'dark)
-               (setq sml/no-confirm-load-theme t)
-               (sml/setup)))
+  :ensure t
+  :defer t
+  :init
+  (progn
+    (setq sml/theme 'dark)
+    (setq sml/no-confirm-load-theme t))
+  :config
+  (sml/setup))
 
 (use-package smart-mode-line-powerline-theme
-             :ensure t
-             :defer t)
+  :ensure t
+  :defer t)
 
 (use-package evil
-             :ensure t
-             :demand
-             :init
-             (progn
-               (setq evil-want-C-u-scroll t)
-               ;; Change cursor color depending on mode
-               (setq evil-emacs-state-cursor '("red" box)
-                     evil-normal-state-cursor '("green" box)
-                     evil-visual-state-cursor '("orange" box)
-                     evil-insert-state-cursor '("red" bar)
-                     evil-replace-state-cursor '("red" bar)
-                     evil-operator-state-cursor '("red" hollow))
-               (evil-mode 1)))
+  :ensure t
+  :demand
+  :init
+  (progn
+    (setq evil-want-C-u-scroll t)
+    ;; Change cursor color depending on mode
+    (setq evil-emacs-state-cursor '("red" box)
+          evil-normal-state-cursor '("green" box)
+          evil-visual-state-cursor '("orange" box)
+          evil-insert-state-cursor '("red" bar)
+          evil-replace-state-cursor '("red" bar)
+          evil-operator-state-cursor '("red" hollow)))
+  :config
+  (evil-mode))
 
 (use-package evil-vimish-fold
-             :ensure t
-             :defer t
-             :diminish evil-vimish-fold-mode
-             :init
-             (evil-vimish-fold-mode 1))
+  :ensure t
+  :defer t
+  :diminish evil-vimish-fold-mode
+  :init
+  (evil-vimish-fold-mode 1))
 
 (use-package magit :ensure t :defer 5)
 
 (use-package ace-jump-mode
-             :ensure t
-             :defer t
-             :diminish ace-jump-mode
-             :init
-             (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
+  :ensure t
+  :defer t
+  :diminish ace-jump-mode
+  :init
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
+
+(use-package shell-mode
+  :init
+  (progn
+    (linum-mode nil)
+    (whitespace-mode nil)))
 
 ;; highlight changes
 (use-package git-gutter-fringe
@@ -175,8 +185,10 @@
 
 (use-package whitespace
   :defer 2
-  :init
+  :config
   (progn
+    (add-hook 'before-save-hook 'delete-trailing-whitespace)
+    (setq-default show-trailing-whitespace t)
     (setq whitespace-style '(face empty tabs lines-tail trailing))
     (global-whitespace-mode t)))
 
@@ -215,25 +227,11 @@
 (show-paren-mode t)
 (setq show-paren-style 'expression)
 
-;; take care of trailing whitespace
-(setq-default show-trailing-whitespace t)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;;php mode
 (use-package php-mode
   :mode ("\\.php$" "\\.inc$"))
-
-;; shell mode
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (linum-mode -1)))
-
-;; eshell mode
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (linum-mode -1)))
 
 ;; faster buffer switch
 (define-prefix-command 'vim-buffer-jump)
@@ -314,11 +312,10 @@
     (setq org-src-fontify-natively t)
     (setq org-agenda-files (list "~/brainDump/projectStack.org"
                                  "~/brainDump/currentWeek.org"
-                                 "~/brainDump/currentMonth.org"))))
+                                 "~/brainDump/currentMonth.org")))
+  :config
+  (add-hook 'org-mode-hook 'ispell-minor-mode))
 
-(add-hook 'org-mode-hook
-          (function (lambda ()
-                      (ispell-minor-mode t))))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 (setq inhibit-splash-screen t)
