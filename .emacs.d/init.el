@@ -308,13 +308,15 @@
   :init
   (progn
     (setq org-log-done 'time)
-    (org-agenda-skip-scheduled-if-done t)
-    (setq org-src-fontify-natively t)
-    (setq org-agenda-files (list "~/brainDump/projectStack.org"
-                                 "~/brainDump/currentWeek.org"
-                                 "~/brainDump/currentMonth.org")))
+    (setq org-src-fontify-natively t))
   :config
-  (add-hook 'org-mode-hook 'ispell-minor-mode))
+  (progn
+    (setq org-agenda-files (list "~/brainDump/currentMonth.org"
+                                 "~/brainDump/projectStack.org"))
+    (setq org-agenda-skip-scheduled-if-done t)
+    (setq org-agenda-skip-deadline-if-done t)
+    (setq org-agenda-skip-timestamp-if-done t)
+    (add-hook 'org-mode-hook 'ispell-minor-mode)))
 
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
