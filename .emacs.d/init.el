@@ -140,7 +140,7 @@
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
 
 (use-package shell-mode
-  :init
+  :config
   (progn
     (linum-mode nil)
     (whitespace-mode nil)))
@@ -311,6 +311,11 @@
     (setq org-src-fontify-natively t))
   :config
   (progn
+    (setq org-directory "~/brainDump")
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|")
+            (sequence "DONE(d)" "CANCELLED(c)" "DELEGATED(d)")))
+    (setq org-archive-location "~/brainDump/archive")
     (setq org-agenda-files (list "~/brainDump/currentMonth.org"
                                  "~/brainDump/projectStack.org"))
     (setq org-agenda-skip-scheduled-if-done t)
