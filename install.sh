@@ -39,6 +39,9 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/anuragpeshne/wombat256.vim /tmp/wombat
 cp -r /tmp/wombat/colors/* ~/.vim/colors
 echo -e "${GREEN} Vim installed${NC}"
+echo "Installing Vim plugins"
+vim +PluginInstall +qall
+echo -e "${GREEN} Vim plugins installed${NC}"
 
 echo -n "Creating soft link for tmux config..."
 ln -s DIR/.tmux.config ~/.tmux.config
