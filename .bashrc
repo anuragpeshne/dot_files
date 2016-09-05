@@ -36,7 +36,7 @@ alias tmux="tmux -u"
 
 # if we have sshed, then show hostname too;
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        export PS1="[\h]\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
+        export PS1="\[\033[48;5;12m\]\h\[$(tput sgr0)\]\[\033[48;5;-1m\]:\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
     else
         export PS1="\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
 fi
