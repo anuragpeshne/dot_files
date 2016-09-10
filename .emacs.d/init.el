@@ -95,17 +95,16 @@
 
 (use-package smart-mode-line
   :ensure t
-  :defer t
   :init
   (progn
-    (setq sml/theme 'dark)
+    (setq sml/theme 'respectful)
     (setq sml/no-confirm-load-theme t))
   :config
   (sml/setup))
 
 (use-package smart-mode-line-powerline-theme
   :ensure t
-  :defer t)
+  :config)
 
 (use-package evil
   :ensure t
@@ -162,14 +161,22 @@
 
 (use-package linum-relative
   :ensure t
-  :defer t
-  :init
-  (progn
-    (global-linum-mode t)
-    (linum-relative-mode t)))
+  :defer t)
+  ;; :init
+  ;; (progn
+  ;;   (global-linum-mode t)
+  ;;   (linum-relative-mode t)))
 
 (column-number-mode 1)
 (hl-line-mode 1)
+
+(use-package cider-mode
+  :mode "\\.clj\\'"
+  :defer t)
+
+(use-package clojure-mode
+  :mode "\\.clj\\'"
+  :defer t)
 
 ;; look and appearance
 (global-font-lock-mode t)
