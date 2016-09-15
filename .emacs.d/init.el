@@ -161,11 +161,11 @@
 
 (use-package linum-relative
   :ensure t
-  :defer t)
-  ;; :init
-  ;; (progn
-  ;;   (global-linum-mode t)
-  ;;   (linum-relative-mode t)))
+  :defer t
+  :init
+  (progn
+    (global-linum-mode t)
+    (linum-relative-mode t)))
 
 (column-number-mode 1)
 (hl-line-mode 1)
