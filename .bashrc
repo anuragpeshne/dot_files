@@ -36,6 +36,12 @@ fi
 # tmux with unicode support; Fixes funny whitespace prepended in commands
 alias tmux="tmux -u"
 
+# special functions for competitive programming
+solve() {
+  cp template.cpp $1
+  vim +4 $1
+}
+
 # if we have sshed, then show hostname too;
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         # sshed
