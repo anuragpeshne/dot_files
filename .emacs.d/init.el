@@ -127,7 +127,8 @@
   :defer t
   :diminish evil-vimish-fold-mode
   :init
-  (evil-vimish-fold-mode 1))
+  (evil-vimish-fold-mode 1)
+  (define-key evil-normal-state-map (kbd "TAB") 'vimish-fold-toggle))
 
 (use-package magit :ensure t :defer 5)
 
