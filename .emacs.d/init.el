@@ -98,9 +98,13 @@
   :init
   (progn
     (setq sml/theme 'respectful)
-    (setq sml/no-confirm-load-theme t))
+    (setq sml/no-confirm-load-theme t)
   :config
-  (sml/setup))
+  (sml/setup)
+  (add-to-list 'sml/replacer-regexp-list '("^~/brainDump/" ":brainDump:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/code/" ":code:") t)
+  ;; note we have omitted trailing 't', to override in build :doc:
+  (add-to-list 'sml/replacer-regexp-list '("^~/:Doc:/notes/" ":notes:"))))
 
 (use-package smart-mode-line-powerline-theme
   :ensure t
@@ -184,8 +188,8 @@
 (show-paren-mode 1)
 (prefer-coding-system 'utf-8)
 ;; use a nice font by default
-(when is-mac
-  (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
+;;(when is-mac
+;;  (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
 
 (use-package whitespace
   :defer 2
