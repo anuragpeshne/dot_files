@@ -24,6 +24,9 @@
 (defvar is-mac)
 (setq is-mac (equal system-type 'darwin))
 
+;; are we on powerful enough machine to load fancy modules?
+(defvar is-power-machine nil)
+
 ;; why say yes when y is enough
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -55,6 +58,7 @@
   :init (winner-mode 1))
 
 (use-package auto-complete
+  :if is-power-machine
   :ensure t
   :defer 3
   :diminish auto-complete-mode
@@ -66,6 +70,7 @@
   :bind ("C-M-g" . dumb-jump-go))
 
 (use-package flycheck
+  :if is-power-machine
   :ensure t
   :defer 5
   :diminish flycheck-mode
@@ -147,6 +152,7 @@
 
 ;; highlight changes
 (use-package git-gutter-fringe
+  :if is-power-machine
   :ensure t
   ;:defer 5
   :diminish git-gutter-mode
@@ -308,35 +314,37 @@
   :config
   (progn
     (setq org-directory "~/brainDump")
-    (setq org-todo-keywords
-          '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|")
-            (sequence "DONE(d)" "CANCELLED(c)" "DELEGATED(d)")))
-    (setq org-archive-location (concat org-directory "archive"))
-    (setq org-agenda-files (list (concat org-directory "/currentMonth.org")
-                                 (concat org-directory "/projectStack.org")
-                                 (concat org-directory "/remember.org")))
-    ;; setup remember (org-capture)
-    (define-key global-map "\C-cc" 'org-capture)
-    (setq org-default-notes-file (concat org-directory "/remember.org"))
-    (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline (concat org-directory "/remember.org")
-                                             "Tasks")
-             "* TODO %?\n  %i\n  %a")
-            ("d" "ToDoD" entry (file+headline (concat org-directory "/currentMonth.org")
-                                              "/Remember/ Tasks")
-             "\n\n** TODO %?\n  DEADLINE: <%(org-read-date nil nil \"+2d\")>\n  %a")
-            ("j" "Journal" entry (file+datetree (concat org-directory "journal.org"))
-             "* %?\nEntered on %U\n  %i\n  %a")))
-    (setq org-agenda-skip-scheduled-if-done t)
-    (setq org-agenda-skip-deadline-if-done t)
-    (setq org-agenda-skip-timestamp-if-done t)
-    (add-hook 'org-mode-hook 'ispell-minor-mode)))
+    (when file-accessible-directory-p org-directory
+          (setq org-todo-keywords
+                '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|")
+                  (sequence "DONE(d)" "CANCELLED(c)" "DELEGATED(d)")))
+          (setq org-archive-location (concat org-directory "archive"))
+          (setq org-agenda-files (list (concat org-directory "/currentMonth.org")
+                                       (concat org-directory "/projectStack.org")
+                                       (concat org-directory "/remember.org")))
+          ;; setup remember (org-capture)
+          (define-key global-map "\C-cc" 'org-capture)
+          (setq org-default-notes-file (concat org-directory "/remember.org"))
+          (setq org-capture-templates
+                '(("t" "Todo" entry (file+headline (concat org-directory "/remember.org")
+                                                   "Tasks")
+                   "* TODO %?\n  %i\n  %a")
+                  ("d" "ToDoD" entry (file+headline (concat org-directory "/currentMonth.org")
+                                                    "/Remember/ Tasks")
+                   "\n\n** TODO %?\n  DEADLINE: <%(org-read-date nil nil \"+2d\")>\n  %a")
+                  ("j" "Journal" entry (file+datetree (concat org-directory "journal.org"))
+                   "* %?\nEntered on %U\n  %i\n  %a")))
+          (setq org-agenda-skip-scheduled-if-done t)
+          (setq org-agenda-skip-deadline-if-done t)
+          (setq org-agenda-skip-timestamp-if-done t)
+          (setq inhibit-splash-screen t)
+          (org-agenda-list)
+          (delete-other-windows))
+    (when is-power-machine
+      (add-hook 'org-mode-hook 'ispell-minor-mode))))
 
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
-(setq inhibit-splash-screen t)
-(org-agenda-list)
-(delete-other-windows)
 (setq ispell-program-name "/usr/local/bin/ispell")
 
 (setq sql-mysql-program "/usr/local/mysql/bin/mysql")
