@@ -317,6 +317,7 @@
                             tab-width 2))))
 
 ;; org mode settings
+(setq org-directory "~/brainDump")
 (use-package org
   :defer t
   :bind
@@ -328,8 +329,7 @@
     (setq org-src-fontify-natively t))
   :config
   (progn
-    (setq org-directory "~/brainDump")
-    (when file-accessible-directory-p org-directory
+    (when (file-accessible-directory-p org-directory)
           (setq org-todo-keywords
                 '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|")
                   (sequence "DONE(d)" "CANCELLED(c)" "DELEGATED(d)")))
@@ -351,13 +351,14 @@
                    "* %?\nEntered on %U\n  %i\n  %a")))
           (setq org-agenda-skip-scheduled-if-done t)
           (setq org-agenda-skip-deadline-if-done t)
-          (setq org-agenda-skip-timestamp-if-done t)
-          (setq inhibit-splash-screen t)
-          (org-agenda-list)
-          (delete-other-windows))
+          (setq org-agenda-skip-timestamp-if-done t))
     (when is-power-machine
       (add-hook 'org-mode-hook 'ispell-minor-mode))))
 
+(when (file-accessible-directory-p org-directory)
+      (setq inhibit-splash-screen t)
+      (org-agenda-list)
+      (delete-other-windows))
 
 (set-frame-parameter nil 'fullscreen 'fullboth)
 (setq ispell-program-name "/usr/local/bin/ispell")
