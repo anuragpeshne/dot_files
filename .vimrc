@@ -4,6 +4,7 @@ syntax on
 set tabstop=2       " The width of a TAB is set to 2.
 set expandtab       " Expand TABs to spaces
 set softtabstop=2
+set shiftwidth=2    " when indenting with '>', use 2 spaces width
 set autoindent
 
 " display related stuff

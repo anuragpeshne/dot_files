@@ -57,12 +57,12 @@
   :defer t
   :init (winner-mode 1))
 
-(use-package auto-complete
+(use-package company
   :if is-power-machine
   :ensure t
-  :defer 3
-  :diminish auto-complete-mode
-  :init (ac-config-default))
+  :defer t
+  :diminish company-mode
+  :init (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package dumb-jump
   :ensure t
@@ -100,17 +100,20 @@
 
 (use-package smart-mode-line
   :ensure t
-  :defer t
   :init
   (progn
-    (setq sml/theme 'dark)
-    (setq sml/no-confirm-load-theme t))
+    (setq sml/theme 'respectful)
+    (setq sml/no-confirm-load-theme t)
   :config
-  (sml/setup))
+  (sml/setup)
+  (add-to-list 'sml/replacer-regexp-list '("^~/brainDump/" ":brainDump:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/code/" ":code:") t)
+  ;; note we have omitted trailing 't', to override in build :doc:
+  (add-to-list 'sml/replacer-regexp-list '("^~/:Doc:/notes/" ":notes:"))))
 
 (use-package smart-mode-line-powerline-theme
   :ensure t
-  :defer t)
+  :config)
 
 (use-package evil
   :ensure t
@@ -133,7 +136,8 @@
   :defer t
   :diminish evil-vimish-fold-mode
   :init
-  (evil-vimish-fold-mode 1))
+  (evil-vimish-fold-mode 1)
+  (define-key evil-normal-state-map (kbd "TAB") 'vimish-fold-toggle))
 
 (use-package magit :ensure t :defer 5)
 
@@ -177,13 +181,21 @@
 (column-number-mode 1)
 (hl-line-mode 1)
 
+(use-package cider-mode
+  :mode "\\.clj\\'"
+  :defer t)
+
+(use-package clojure-mode
+  :mode "\\.clj\\'"
+  :defer t)
+
 ;; look and appearance
 (global-font-lock-mode t)
 (show-paren-mode 1)
 (prefer-coding-system 'utf-8)
 ;; use a nice font by default
-(when is-mac
-  (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
+;;(when is-mac
+;;  (set-frame-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1"))
 
 (use-package whitespace
   :defer 2
@@ -259,11 +271,14 @@
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
-    ("ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+    ("412c25cf35856e191cc2d7394eed3d0ff0f3ee90bacd8db1da23227cdff74ca2" "ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(fci-rule-color "#383838")
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map

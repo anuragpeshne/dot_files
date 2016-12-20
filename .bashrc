@@ -27,6 +27,8 @@ elif [[ $platform == 'osx' ]]; then
    alias vim="/Applications/MacVim.app/Contents/MacOS/vim"
    alias mvim="/Applications/MacVim.app/Contents/MacOS/MacVim"
 
+   alias emacsc="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+
    # scheme
    alias scheme="/Applications/MIT\:GNU\ Scheme.app/Contents/Resources/mit-scheme"
 fi
@@ -34,8 +36,16 @@ fi
 # tmux with unicode support; Fixes funny whitespace prepended in commands
 alias tmux="tmux -u"
 
+# special functions for competitive programming
+solve() {
+  cp template.cpp $1
+  vim +4 $1
+}
+
 # if we have sshed, then show hostname too;
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        # sshed
+        alias rm="rm -i" # are you sure you want to rm on sshed system?
         export PS1="\[\033[48;5;12m\]\h\[$(tput sgr0)\]\[\033[48;5;-1m\]:\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
     else
         export PS1="\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "

@@ -8,3 +8,6 @@
 .emacs.d/recentf
 .emacs.d/savehist
 .emacs.d/tramp
+.emacs.d/.cask
+.emacs.d/bookmarks
+.emacs.d/vimish-fold
