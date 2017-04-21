@@ -1,3 +1,6 @@
+source /usr/local/git/contrib/completion/git-completion.bash
+source /usr/local/git/contrib/completion/git-prompt.sh
+
 # colors
 SH_WHITE="\[\033[1;37m\]"
 SH_BLUE="\[\033[1;34m\]"
@@ -50,14 +53,27 @@ solve() {
   vim +4 $1
 }
 
-# if we have sshed, then show hostname too;
-export PS1="\w\[$(tput sgr0)\]"${SH_GREEN}"[\$?\[$(tput sgr0)\]"${SH_GREEN}"]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        # sshed
-        alias rm="rm -i" # are you sure you want to rm on sshed system?
-        export PS1=${SH_BLUE}"\u@\H\[$(tput sgr0)\]"${PS1}
-fi
+# customize PS1
+PROMPT_COMMAND=__prompt_command
+__prompt_command() {
+  local curr_exit="$?"
+  PS1="\w\[$(tput sgr0)\]"
 
+  if [ "$curr_exit" != 0 ]; then
+    PS1+=${SH_RED}"[\$?\[$(tput sgr0)\]"${SH_RED}"]"
+  else
+    PS1+=${SH_GREEN}"[\$?\[$(tput sgr0)\]"${SH_GREEN}"]"
+  fi
+  # if we have sshed, then show hostname too;
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    # sshed
+    alias rm="rm -i" # are you sure you want to rm on sshed system?
+    export PS1=${SH_BLUE}"\u@\H\[$(tput sgr0)\]"{PS1}
+  fi
+  PS1+="\[$(tput sgr0)\]\[\033[38;5;15m\]"
+  PS1+=$(__git_ps1 "(%s)")
+  PS1+="\\$ "
+}
 man() {
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
