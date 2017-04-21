@@ -30,6 +30,9 @@ set showmatch           " Show matching brackets.
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+set tags=./tags;/      " search for tags in pwd and go up until found
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " open tag in vsplit
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()

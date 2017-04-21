@@ -1,3 +1,10 @@
+# colors
+SH_WHITE="\[\033[1;37m\]"
+SH_BLUE="\[\033[1;34m\]"
+SH_RED="\[\033[1;31m\]"
+SH_GREEN="\[\033[1;32m\]"
+SH_YELLOW="\[\033[1;33m\]"
+
 # determine platform
 platform='unknown'
 unamestr=`uname`
@@ -9,8 +16,9 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
     platform='osx'
 fi
 
-# awesome git status
+# git aliases
 alias gits="git status -sb"
+alias gitc="git diff --name-only --diff-filter=U"
 
 # colorify
 alias grep="grep --color"
@@ -43,12 +51,11 @@ solve() {
 }
 
 # if we have sshed, then show hostname too;
+export PS1="\w\[$(tput sgr0)\]"${SH_GREEN}"[\$?\[$(tput sgr0)\]"${SH_GREEN}"]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         # sshed
         alias rm="rm -i" # are you sure you want to rm on sshed system?
-        export PS1="\[\033[48;5;12m\]\h\[$(tput sgr0)\]\[\033[48;5;-1m\]:\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
-    else
-        export PS1="\w\[$(tput sgr0)\]\[\033[38;5;50m\][\$?\[$(tput sgr0)\]\[\033[38;5;86m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ "
+        export PS1=${SH_BLUE}"\u@\H\[$(tput sgr0)\]"${PS1}
 fi
 
 man() {
