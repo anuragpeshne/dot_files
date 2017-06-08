@@ -57,4 +57,4 @@ set guioptions-=L
 
 " custom mapping
 command Fo execute "normal! $zf%" " fold line by doing a :Fo
-nnoremap <tab> :tabn<cr>
+nnoremap <leader><tab> :tabn<cr>
