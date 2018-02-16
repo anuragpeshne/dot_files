@@ -28,6 +28,15 @@ alias grep="grep --color"
 alias egrep="egrep --color=auto";
 alias g11="clang++ -std=c++11 -stdlib=libc++ -Weverything"
 
+# shortcut for grepping in file
+findg() {
+    find ./ -name $1 -type f -exec grep --color -Hn $2 {} \;
+}
+
+# history size
+HISTSIZE=1000
+HISTFILESIZE=2000
+
 if [[ $platform == 'linux' ]]; then
    alias ls='ls --color=auto'
 elif [[ $platform == 'freebsd' ]]; then

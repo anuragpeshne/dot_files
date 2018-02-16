@@ -44,6 +44,8 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'mileszs/ack.vim'
 Plugin 'gkz/vim-ls'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'dracula/vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -58,3 +60,4 @@ set guioptions-=L
 " custom mapping
 command Fo execute "normal! $zf%" " fold line by doing a :Fo
 nnoremap <leader><tab> :tabn<cr>
+nnoremap <leader>n     :noh<cr>
