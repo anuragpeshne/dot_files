@@ -9,8 +9,11 @@
 (setq gc-cons-threshold-bk gc-cons-threshold)
 (setq gc-cons-threshold (* 100 1024 1024))
 
+;; org-babel elixir functions
+(add-to-list 'load-path "~/.emacs.d/ob-elixir/")
+
 (setq exec-path (append exec-path '("/usr/local/bin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setenv "PATH" (concat (concat (getenv "PATH") ":/usr/local/bin") ":/Library/TeX/texbin"))
 (setq user-full-name "Anurag Peshne"
       user-mail-address "anurag.peshne@gmail.com")
 
@@ -27,7 +30,7 @@
 (setq is-linux (equal system-type "gnu/linux"))
 
 ;; are we on powerful enough machine to load fancy modules?
-(defvar is-power-machine `t)
+(defvar is-power-machine t)
 
 ;; why say yes when y is enough
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -281,7 +284,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
+    (markdown-mode web-mode alchemist flycheck-elixir outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -338,7 +341,6 @@
                   (sequence "DONE(d)" "CANCELLED(c)" "DELEGATED(d)")))
           (setq org-archive-location (concat org-directory "archive"))
           (setq org-agenda-files (list (concat org-directory "/currentMonth.org")
-                                       (concat org-directory "/projectStack.org")
                                        (concat org-directory "/remember.org")))
           ;; setup remember (org-capture)
           (define-key global-map "\C-cc" 'org-capture)
@@ -360,6 +362,9 @@
         (add-hook 'org-mode-hook 'ispell-minor-mode))
       (when is-linux
         (add-hook 'org-mode-hook 'aspell-minor-mode)))))
+(org-babel-do-load-languages
+  'org-babel-load-languages '((C . t)(python . t)(elixir . t)(ditaa . t)))
+(setq org-export-babel-evaluate nil)
 
 (when (file-accessible-directory-p org-directory)
       (setq inhibit-splash-screen t)
