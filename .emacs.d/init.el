@@ -22,10 +22,12 @@
 
 ;; are we on mac?
 (defvar is-mac)
-(setq is-mac (equal system-type 'darwin))
+(defvar is-linux)
+(setq is-mac (equal system-type "darwin"))
+(setq is-linux (equal system-type "gnu/linux"))
 
 ;; are we on powerful enough machine to load fancy modules?
-(defvar is-power-machine nil)
+(defvar is-power-machine `t)
 
 ;; why say yes when y is enough
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -45,12 +47,6 @@
       '(kill-ring
         search-ring
         regexp-search-ring))
-
-(when window-system
-  (tooltip-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1))
 
 (use-package winner
   :ensure t
@@ -148,12 +144,6 @@
   :init
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode))
 
-(use-package shell-mode
-  :config
-  (progn
-    (linum-mode nil)
-    (whitespace-mode nil)))
-
 ;; highlight changes
 (use-package git-gutter-fringe
   :if is-power-machine
@@ -188,6 +178,23 @@
 (use-package clojure-mode
   :mode "\\.clj\\'"
   :defer t)
+
+(use-package tex
+  :defer t
+  :ensure auctex
+  :config
+  (progn
+    (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
+    (require 'outline-magic)
+    (setq TeX-auto-save t)))
+
+(use-package outline-magic
+    :defer t
+    :ensure
+    :config
+    (progn
+      (require 'outline-magic)
+      (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
 
 ;; look and appearance
 (global-font-lock-mode t)
@@ -243,10 +250,6 @@
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;;php mode
-(use-package php-mode
-  :mode ("\\.php$" "\\.inc$"))
-
 ;; faster buffer switch
 (define-prefix-command 'vim-buffer-jump)
 (global-set-key (kbd "C-w") 'vim-buffer-jump)
@@ -278,7 +281,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
+    (outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -353,15 +356,28 @@
           (setq org-agenda-skip-deadline-if-done t)
           (setq org-agenda-skip-timestamp-if-done t))
     (when is-power-machine
-      (add-hook 'org-mode-hook 'ispell-minor-mode))))
+      (when is-mac
+        (add-hook 'org-mode-hook 'ispell-minor-mode))
+      (when is-linux
+        (add-hook 'org-mode-hook 'aspell-minor-mode)))))
 
 (when (file-accessible-directory-p org-directory)
       (setq inhibit-splash-screen t)
       (org-agenda-list)
       (delete-other-windows))
 
+(when window-system
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+(menu-bar-mode -1)
 (set-frame-parameter nil 'fullscreen 'fullboth)
-(setq ispell-program-name "/usr/local/bin/ispell")
+
+(when is-mac
+  (setq ispell-program-name "/usr/local/bin/ispell"))
+
+(when is-linux
+  (setq ispell-program-name "/usr/bin/aspell"))
 
 (setq sql-mysql-program "/usr/local/mysql/bin/mysql")
 
