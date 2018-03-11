@@ -64,7 +64,6 @@
   :init (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package dumb-jump
-  :ensure t
   :defer 3
   :bind ("C-M-g" . dumb-jump-go))
 
@@ -110,6 +109,9 @@
   ;; note we have omitted trailing 't', to override in build :doc:
   (add-to-list 'sml/replacer-regexp-list '("^~/:Doc:/notes/" ":notes:"))))
 
+(use-package ledger-mode
+  :mode "\\.dat\\'")
+
 (use-package smart-mode-line-powerline-theme
   :ensure t
   :config)
@@ -141,7 +143,6 @@
 (use-package magit :ensure t :defer 5)
 
 (use-package ace-jump-mode
-  :ensure t
   :defer t
   :diminish ace-jump-mode
   :init
@@ -198,6 +199,18 @@
     (progn
       (require 'outline-magic)
       (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
+
+(use-package projectile
+    :diminish projectile-mode
+    :defer t
+    :init
+    (setq projectile-keymap-prefix (kbd "C-c C-p"))
+    :config
+    (progn
+      (projectile-global-mode)
+      (helm-projectile-on)
+      (define-key projectile-mode-map [?\s-f] 'projectile-find-file)
+      (define-key projectile-mode-map [?\s-t] 'projectile-find-test-file)))
 
 ;; look and appearance
 (global-font-lock-mode t)
@@ -279,12 +292,19 @@
    (quote
     ("412c25cf35856e191cc2d7394eed3d0ff0f3ee90bacd8db1da23227cdff74ca2" "ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(fci-rule-color "#383838")
+ '(ledger-reports
+   (quote
+    (("splitwise" "ledger bal split")
+     ("bal" "%(binary) -f %(ledger-file) bal")
+     ("reg" "%(binary) -f %(ledger-file) reg")
+     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (markdown-mode web-mode alchemist flycheck-elixir outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme ox-ioslide magit livescript-mode linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
+    (ledger-mode helm-projectile projectile markdown-mode web-mode alchemist flycheck-elixir outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme magit linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map

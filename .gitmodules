@@ -1,0 +1,3 @@
+[submodule ".emacs.d/ob-elixir"]
+	path = .emacs.d/ob-elixir
+	url = https://github.com/zweifisch/ob-elixir.git
