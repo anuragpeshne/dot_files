@@ -1,6 +1,3 @@
-source /usr/local/git/contrib/completion/git-completion.bash
-source /usr/local/git/contrib/completion/git-prompt.sh
-
 # colors
 SH_WHITE="\[\033[1;37m\]"
 SH_BLUE="\[\033[1;34m\]"
@@ -42,6 +39,9 @@ if [[ $platform == 'linux' ]]; then
 elif [[ $platform == 'freebsd' ]]; then
    alias ls='ls -G'
 elif [[ $platform == 'osx' ]]; then
+   source /usr/local/git/contrib/completion/git-completion.bash
+   source /usr/local/git/contrib/completion/git-prompt.sh
+
    alias ls='ls -G'
    # for OSX: point vim to newer version
    alias vim="/Applications/MacVim.app/Contents/MacOS/vim"
@@ -80,7 +80,9 @@ __prompt_command() {
     export PS1=${SH_BLUE}"\u@\H\[$(tput sgr0)\]"{PS1}
   fi
   PS1+="\[$(tput sgr0)\]\[\033[38;5;15m\]"
-  PS1+=$(__git_ps1 "(%s)")
+  if [[ $platform == 'osx' ]]; then
+    PS1+=$(__git_ps1 "(%s)")
+  fi
   PS1+="\\$ "
 }
 man() {

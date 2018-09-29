@@ -40,12 +40,11 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
-Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'mileszs/ack.vim'
-Plugin 'gkz/vim-ls'
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'dracula/vim'
+" Plugin 'mileszs/ack.vim'
+" Plugin 'gkz/vim-ls'
+" Plugin 'dracula/vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
