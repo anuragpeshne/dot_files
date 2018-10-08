@@ -34,7 +34,12 @@ set tags=./tags;/      " search for tags in pwd and go up until found
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " open tag in vsplit
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+if has('win32') || has('win64')
+    set runtimepath+=$HOME/vimfiles/bundle/Vundle.vim
+else
+    set runtimepath+=~/.vim/bundle/Vundle.vim
+endif
+
 call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -50,7 +55,9 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 set laststatus=2
 
-set guifont=Liberation_Mono_for_Powerline:h10
+if has('win32') || has('win64')
+  set guifont=Consolas:h11
+endif
 set guioptions-=r
 set guioptions-=R
 set guioptions-=l

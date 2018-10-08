@@ -51,6 +51,7 @@ values."
      version-control
      ;; Languages
      python
+     ;;windows-scripts
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -134,11 +135,26 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 14
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   dotspacemacs-default-font '(("Source Code Pro"
+                                :size 14
+				                        :weight normal
+				                        :width normal
+                                :powerline-scale 1.1)
+			                         ("Menlo"
+				                        :size 14
+				                        :weight normal
+				                        :width normal
+				                        :powerline-scale 1.1)
+                               ("Consolas"
+                                :size 24
+				                        :weight normal
+				                        :width normal
+                                :powerline-scale 1.1)
+                               ("DejaVu Sans"
+                                :size 14
+				                        :weight normal
+				                        :width normal
+				                        :powerline-scale 1.1))
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
