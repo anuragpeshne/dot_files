@@ -150,7 +150,7 @@ values."
 				                        :weight normal
 				                        :width normal
                                 :powerline-scale 1.1)
-                               ("DejaVu Sans"
+                               ("DejaVu Sans Mono"
                                 :size 14
 				                        :weight normal
 				                        :width normal
