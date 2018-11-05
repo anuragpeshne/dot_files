@@ -69,6 +69,12 @@ function install_vim_plugins {
   echo "Installing Vim plugins"
   vim +PluginInstall +qall
   check_return_code $?
+
+  echo "Installing You Complete Me"
+  cd ~/.vim/bundle/YouCompleteMe
+  ./install.sh
+  echo -e "${GREEN} You Complete Me (Vim auto-completion installed${NC})"
+  check_return_code $?
 }
 
 function install_tmux_config {

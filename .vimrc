@@ -58,6 +58,7 @@ set laststatus=2
 if has('win32') || has('win64')
   set guifont=Consolas:h11
 endif
+set t_Co=256
 set guioptions-=r
 set guioptions-=R
 set guioptions-=l

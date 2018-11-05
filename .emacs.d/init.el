@@ -104,7 +104,7 @@
     (setq sml/no-confirm-load-theme t)
   :config
   (sml/setup)
-  (add-to-list 'sml/replacer-regexp-list '("^~/brainDump/" ":brainDump:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/Documents/brainDump/" ":brainDump:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/code/" ":code:") t)
   ;; note we have omitted trailing 't', to override in build :doc:
   (add-to-list 'sml/replacer-regexp-list '("^~/:Doc:/notes/" ":notes:"))))
@@ -156,17 +156,21 @@
   :diminish git-gutter-mode
   :config (global-git-gutter-mode))
 
+(use-package dracula-theme
+  :ensure t
+  :defer
+  :init (load-theme 'dracula t))
 
 (use-package zenburn-theme
   :ensure t
-  :defer 2
-  :init (load-theme 'zenburn t))
+  :defer)
+  ;:init (load-theme 'zenburn t))
 
-(use-package leuven-theme :ensure t :disabled t)
+(use-package leuven-theme :defer :disabled t)
 
 (use-package linum-relative
   :ensure t
-  :defer t
+  :defer 2
   :init
   (progn
     (global-linum-mode t)
@@ -202,7 +206,7 @@
 
 (use-package projectile
     :diminish projectile-mode
-    :defer t
+    :defer 2
     :init
     (setq projectile-keymap-prefix (kbd "C-c C-p"))
     :config
@@ -290,11 +294,13 @@
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
-    ("412c25cf35856e191cc2d7394eed3d0ff0f3ee90bacd8db1da23227cdff74ca2" "ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+    ("9a155066ec746201156bb39f7518c1828a73d67742e11271e4f24b7b178c4710" "412c25cf35856e191cc2d7394eed3d0ff0f3ee90bacd8db1da23227cdff74ca2" "ff02e8e37c9cfd192d6a0cb29054777f5254c17b1bf42023ba52b65e4307b76a" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "26614652a4b3515b4bbbb9828d71e206cc249b67c9142c06239ed3418eff95e2" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(fci-rule-color "#383838")
  '(ledger-reports
    (quote
-    (("splitwise" "ledger bal split")
+    (("discover" "ledger -f ~/Documents/ledgers/fy2018.dat bal dis")
+     ("wf" "ledger -f ~/Documents/ledgers/fy2018.dat bal sav che")
+     ("splitwise" "ledger -f ~/Documents/ledgers/fy2018.dat bal split")
      ("bal" "%(binary) -f %(ledger-file) bal")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
@@ -304,7 +310,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (ledger-mode helm-projectile projectile markdown-mode web-mode alchemist flycheck-elixir outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme magit linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
+    (clojure-snippets yasnippet yasnippet-snippets latex-extra slime ledger-mode helm-projectile projectile markdown-mode web-mode alchemist flycheck-elixir outline-magic-mode outline-magic auctex company company-mode zenburn-theme use-package smart-mode-line-powerline-theme magit linum-relative leuven-theme htmlize helm git-gutter-fringe flycheck evil-vimish-fold dumb-jump cider ag ace-jump-mode)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -343,7 +349,7 @@
                             tab-width 2))))
 
 ;; org mode settings
-(setq org-directory "~/brainDump")
+(setq org-directory "~/Documents/brainDump")
 (use-package org
   :defer t
   :bind
@@ -376,14 +382,16 @@
                    "* %?\nEntered on %U\n  %i\n  %a")))
           (setq org-agenda-skip-scheduled-if-done t)
           (setq org-agenda-skip-deadline-if-done t)
-          (setq org-agenda-skip-timestamp-if-done t))
+          (setq org-agenda-skip-timestamp-if-done t)
+          (setq org-clock-persist 'history)
+          (org-clock-persistence-insinuate))
     (when is-power-machine
       (when is-mac
         (add-hook 'org-mode-hook 'ispell-minor-mode))
       (when is-linux
         (add-hook 'org-mode-hook 'aspell-minor-mode)))))
 (org-babel-do-load-languages
-  'org-babel-load-languages '((C . t)(python . t)(elixir . t)(ditaa . t)))
+  'org-babel-load-languages '((C . t)(python . t)(elixir . t)(ditaa . t)(clojure . t)))
 (setq org-export-babel-evaluate nil)
 
 (when (file-accessible-directory-p org-directory)
