@@ -26,6 +26,7 @@ set hidden              " Hide buffers when they are abandoned
 set wildmenu
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
+set shell=/bin/bash
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -48,8 +49,8 @@ Plugin 'bling/vim-airline'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-" Plugin 'jelera/vim-javascript-syntax'
 Plugin 'Valloric/YouCompleteMe'
+" Plugin 'jelera/vim-javascript-syntax'
 " Plugin 'mileszs/ack.vim'
 " Plugin 'gkz/vim-ls'
 " Plugin 'dracula/vim'
