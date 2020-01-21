@@ -112,7 +112,7 @@ function install_i3 {
 
 # actual installation begins
 declare -a config_installers=("install_bash_config" "install_vim_config"
-  "install_vim_plugins" "install_tmux_config" "install_emacs_config",
+  "install_vim_plugins" "install_tmux_config" "install_emacs_config"
   "install_i3")
 
 for installation in "${config_installers[@]}"
