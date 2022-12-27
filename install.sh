@@ -110,10 +110,16 @@ function install_emacs_config {
   done
 }
 
+function install_i3 {
+  echo -n "Creating soft link for i3 config..."
+  ln -s $DIR/i3 ~/.config/i3
+  check_return_code $?
+}
+
 # actual installation begins
 declare -a config_installers=("install_bash_config" "install_vim_config"
   "install_vim_plugins" "install_tmux_config" "install_emacs_config"
-  "install_nvim_config")
+  "install_nvim_config" "install_i3")
 
 for installation in "${config_installers[@]}"
 do
