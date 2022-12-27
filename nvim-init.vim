@@ -1,3 +1,5 @@
+" Mostly a copy of '.vimrc' with a few extra nvim things.
+
 syntax on
 
 " indentation related and coding style
@@ -10,7 +12,6 @@ set autoindent
 " display related stuff
 set relativenumber
 set number
-colorscheme wombat256mod
 set foldenable
 set colorcolumn=80
 set cursorline
@@ -49,6 +50,7 @@ Plugin 'bling/vim-airline'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
+Plugin 'anuragpeshne/wombat256.vim'
 " Plugin 'rust-lang/rust.vim'
 " Plugin 'neoclide/coc.nvim'
 " Plugin 'Valloric/YouCompleteMe'
@@ -60,6 +62,7 @@ Plugin 'tpope/vim-fugitive'
 call vundle#end()            " required
 filetype plugin indent on    " required
 set laststatus=2
+colorscheme wombat256mod
 
 if has('win32') || has('win64')
   set guifont=Consolas:h11

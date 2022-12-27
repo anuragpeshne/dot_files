@@ -83,6 +83,12 @@ function install_tmux_config {
   check_return_code $?
 }
 
+function install_nvim_config {
+  echo -n "Creating soft link for NeoVim config..."
+  ln -s $DIR/nvim-init.vim ~/.config/nvim/init.vim
+  check_return_code $?
+}
+
 function install_emacs_config {
   # install spacemacs or custom emacs.d
   while true; do
@@ -106,7 +112,8 @@ function install_emacs_config {
 
 # actual installation begins
 declare -a config_installers=("install_bash_config" "install_vim_config"
-  "install_vim_plugins" "install_tmux_config" "install_emacs_config")
+  "install_vim_plugins" "install_tmux_config" "install_emacs_config"
+  "install_nvim_config")
 
 for installation in "${config_installers[@]}"
 do
