@@ -1,0 +1,12 @@
+{
+  "LazyVim": { "branch": "main", "commit": "879e29504d43e9f178d967ecc34d482f902e5a91" },
+  "cmp-emoji": { "branch": "main", "commit": "19075c36d5820253d32e2478b6aaf3734aeaafa0" },
+  "gruvbox.nvim": { "branch": "main", "commit": "0940564208a490c173216c3b7d2188b0a5ad3491" },
+  "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },
+  "lualine.nvim": { "branch": "master", "commit": "2248ef254d0a1488a72041cfb45ca9caada6d994" },
+  "nvim-cmp": { "branch": "main", "commit": "0b751f6beef40fd47375eaf53d3057e0bfa317e4" },
+  "nvim-lspconfig": { "branch": "master", "commit": "694aaec65733e2d54d393abf80e526f86726c988" },
+  "nvim-treesitter": { "branch": "master", "commit": "80a16deb5146a3eb4648effccda1ab9f45e43e76" },
+  "telescope.nvim": { "branch": "master", "commit": "84c5a71d825b6687a55aed6f41e98b92fd8e5454" },
+  "vim-gitgutter": { "branch": "main", "commit": "fe0e8a2630eef548e4122096e4e2241f42208fe3" }
+}
